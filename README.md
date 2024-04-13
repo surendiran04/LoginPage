@@ -1,6 +1,6 @@
+<h2>The Frontend Pages</h2>
 <h4>Login-Page </h4>
-The Existing user can Login this page by providing emailId and Password.If Provided Wrong EmailId or password the error will be sho
-# Signup-Page
-# ForgotPassword-Page
-# ResetPassword-Page
-# DashBoard-Page
+<h4>Signup-Page</h4>
+<h4>ForgotPassword-Page</h4>
+<h4>ResetPassword-Page</h4>
+<h4>DashBoard-Page</h4>

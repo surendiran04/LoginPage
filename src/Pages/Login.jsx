@@ -47,10 +47,8 @@ export default function Login() {
       const result = await response.json();
 
       if (result.success) {
-        console.log(result.user, isLoggedIn)
         toast.success(result.message);
         setLoggedIn(true);
-        console.log(result.user, isLoggedIn)
         SetUser(result.user);
         sessionStorage.setItem('_tk', result.token);
         navigate('/Dashboard');

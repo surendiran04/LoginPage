@@ -1,14 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "../Contexts/AuthContext";
+
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Eye, EyeOff } from "lucide-react";
 const { VITE_BACKEND_URL } = import.meta.env;
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../App.css";
 
 export default function Login() {
-  // const { setLoggedIn } = useAuthContext();
+
+  let notify = () =>
+    toast.warn(errors.Name?.message || errors.email?.message || errors.password?.message);
+
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isShow, setIsShow] = useState(false);
@@ -24,40 +29,35 @@ export default function Login() {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
     handleSignup(data);
     reset();
   };
 
-  function handleSignup(data) {
-    fetch(`${VITE_BACKEND_URL}/signUp`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((result) => {
-        if (result.success) {
-          try {
-            // setIsLoggedIn(true);
-            navigate("/");
-          } catch (error) {
-            console.log(error);
-          }
-        }
-        else{
-          console.log(result)
-        }
-      })
-      .catch((error) => {
-        console.log(error);
+  const handleSignup = async (data) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${VITE_BACKEND_URL}/signUp`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       });
-  }
 
+      const result = await response.json();
+      if (result.success) {
+        toast.success(result.message);
+        // navigate("/");
+      } else {
+        toast.info(result.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+    finally {
+      setIsLoading(false); // Set isLoading back to false after the request completes
+    }
+  };
   return (
     <div className="flex justify-center items-center font-anta bg-gradient1">
       <div className="md:w-1/3 w-1/2 md:h-3/4 h-1/3 md:mt-4 rounded-md p-6  card-gradient">
@@ -83,42 +83,42 @@ export default function Login() {
         </div>
 
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-        <input
+          <input
             name="name"
             className="w-full p-3 rounded-full text-xl  text-black outline-none border-none px-5 shadow-xl"
             placeholder="Enter your Name"
             type="text"
-            {...register("Name", { required: "This is required" })}
-            // disabled={isLoading}
+            {...register("Name", { required: "Name is required" })}
+            disabled={isLoading}
           />
-           {/* <p>{errors.Name?.message}</p> */}
           <input
             name="email"
             className="w-full p-3 rounded-full text-xl  text-black outline-none border-none px-5 shadow-xl"
             placeholder="Enter your Email"
             type="email"
-            {...register("email", { required: "This is required" })}
-            // disabled={isLoading}
+            {...register("email", { required: "Email is required" })}
+            disabled={isLoading}
           />
-          <p>{errors.email?.message}</p>
           <div className="flex">
-          <input
-            name="password"
-            type={isShow ? "text" : "password"}
-            placeholder="Enter your Password "
-            className="w-full p-3 rounded-full text-xl text-black outline-none border-none px-5 z-0"
-            // disabled={isLoading}
-            {...register("password",{
-              required: "this is required",
-              minLength: { value: 8, message: "Minimum length should be 8" },
-            })}
-          />
-          <div onClick={toggleState} classname="cursor-pointer  mt-10">
-            {isShow ? <Eye size={36} /> : <EyeOff size={36} />}
-          </div>
+            <input
+              name="password"
+              type={isShow ? "text" : "password"}
+              placeholder="Enter your Password "
+              className="w-full p-3 rounded-full text-xl text-black outline-none border-none px-5 z-0"
+              disabled={isLoading}
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 8,
+                  message: "password should be minimum of 8 characters",
+                },
+              })}
+            />
+            <div onClick={toggleState} classname="cursor-pointer  mt-10">
+              {isShow ? <Eye size={36} /> : <EyeOff size={36} />}
+            </div>
           </div>
 
-          <p>{errors.password?.message}</p>
           <button
             className={`
         w-full
@@ -129,29 +129,37 @@ export default function Login() {
              : "bg-transparent border-purple-500 hover:bg-purple-500 text-purple-700"
          }`}
             type="submit"
+            onClick={notify}
+            disabled={isLoading}
           >
             {isLoading ? "Loading" : "Sign Up"}
           </button>
-          {/* {errorMsg !== null && errorMsg[0] && (
-            <div className="bg-red-500 text-white rounded-3xl w-full text-xl sm:text-md text-center my-8 p-4 h-full">
-              {errorMsg.map((error, i) => (
-                <p key={i}>{error}</p>
-              ))}
-            </div>
-          )} */}
         </form>
         <div className="text-center mt-7">
           <p className="text-white font-semibold text-[18px]">
             Already have an account?{" "}
             <Link
               to="/"
-              className="text-blue-700 cursor-pointer font-bold "
+              className="text-blue-700 underline cursor-pointer font-bold "
             >
               Login
             </Link>
           </p>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition:Bounce
+      />
     </div>
   );
 }

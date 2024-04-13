@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 const { VITE_BACKEND_URL } = import.meta.env;
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "../app.css"
 
 export default function ForgotPassword() {
-
-  const navigate = useNavigate();
+  let notify = () =>
+  toast.warn( errors.email?.message);
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -22,35 +22,58 @@ export default function ForgotPassword() {
     handleEmail(data);
     reset();
   };
+  
+     //using then catch block
+    // fetch(`${VITE_BACKEND_URL}/forgotPassword`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(data),
+    // })
+    //   .then((response) => {
+    //     return response.json();
+    //   })
+    //   .then((result) => {
+    //     if (result.success) {
+    //       toast.success(result.message);
+    //     }
+    //     else{
+    //       toast.info(result.message);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     toast.error(error.message);
+    //   })
+    // };
 
-  function handleEmail(data) {
-    fetch(`${VITE_BACKEND_URL}/forgotPassword`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((result) => {
-        if (result.success) {
-          try {
-            // sessionStorage.setItem("_tk", result.token);
-            console.log(result.message);
-            // setIsLoggedIn(true);
-            navigate("/Dashboard");
-          }catch (error) {
-            console.log("helo1")
-            console.log(error);
-          }
-        }
-      })
-      .catch((error) => {
-        console.log("helo2")
-        console.log(error);
+  const handleEmail=async(data) =>{
+    try {
+      setIsLoading(true); // Set isLoading to true when the request starts
+
+      const response = await fetch(`${VITE_BACKEND_URL}/forgotPassword`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
+
+      const result = await response.json();
+
+      if (result.success) {
+
+        toast.success(result.message);
+      } else {
+        toast.info(result.message);
+      }
+    } catch (error) {
+  
+      toast.error(error.message);
+      console.error(error);
+    } finally {
+      setIsLoading(false); // Set isLoading back to false after the request completes
+    }
   }
 
 
@@ -68,9 +91,8 @@ export default function ForgotPassword() {
             placeholder="Enter your Email"
             type="email"
             {...register("email", { required: "This is required" })}
-            // disabled={isLoading}
+            disabled={isLoading}
           />
-          <p>{errors.email?.message}</p>
           <button
             className={`
         w-full
@@ -81,29 +103,37 @@ export default function ForgotPassword() {
              : "bg-transparent border-purple-500 hover:bg-purple-500 text-purple-700"
          }`}
             type="submit"
+            onClick={notify}
+            disabled={isLoading}
           >
             {isLoading ? "Loading" : "Send Mail"}
           </button>
-          {/* {errorMsg !== null && errorMsg[0] && (
-            <div className="bg-red-500 text-white rounded-3xl w-full text-xl sm:text-md text-center my-8 p-4 h-full">
-              {errorMsg.map((error, i) => (
-                <p key={i}>{error}</p>
-              ))}
-            </div>
-          )} */}
         </form>
         <div className="text-center mt-7">
           <p className="text-white font-semibold text-[18px]">
             Don't have an Email?{" "}
             <Link
               to="/signup"
-              className="text-blue-700 cursor-pointer font-bold "
+              className="text-blue-700 underline cursor-pointer font-bold "
             >
               Sign Up
             </Link>
           </p>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition:Bounce
+      />
     </div>
   );
 }

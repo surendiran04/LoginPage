@@ -10,27 +10,32 @@ const AuthContext = createContext({
 export const useAuthContext = () => useContext(AuthContext);
 
 export default function AuthContextProvider({ children }) {
-  const [isLoggedIn, setLoggedIn] = useState(false);
-  const [tk, setTk] = useState({});
+
+  const [isLoggedIn, setLoggedIn] = useState(() => {
+    // Retrieve login state from local storage (if available)
+    const storedLoggedIn = sessionStorage.getItem("loggedIn");
+    return storedLoggedIn === "true"; // Convert to boolean
+});
   const token = sessionStorage.getItem("_tk");
   const { decodedToken, isExpired } = useJwt(token || "");
 
   useEffect(() => {
     if (decodedToken) {
       setLoggedIn(true);
-      setTk(decodedToken);
     }
     if (isExpired) {
       setLoggedIn(false);
-      setTk({});
     }
   }, [token]);
+
+  useEffect(() => {
+    sessionStorage.setItem("loggedIn", isLoggedIn);
+}, [isLoggedIn]);
 
   const values = Object.seal({
     isLoggedIn,
     setLoggedIn,
     decodedToken,
-    tk,
   });
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;

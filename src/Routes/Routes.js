@@ -1,5 +1,4 @@
 import Login from '../Pages/Login'
-import LoginComponent from '../Pages/SLogin';
 import Signup from "../Pages/Signup";
 import ForgotPassword from "../Pages/ForgotPassword";
 import Dashboard from "../Pages/Dashboard";
@@ -21,14 +20,14 @@ export  const ROUTES = [
     Component:ForgotPassword,
     path: "/forgotPassword",
   },
-];
-
-export const PrivateRoutes=[
   {
     title: "Reset Password",
     Component:UpdatePassword,
-    path: "/resetPassword",
+    path: "/resetPassword/:id/:token",
   },
+];
+
+export const PrivateRoutes=[
   {
     title: "Dashboard",
     Component: Dashboard,
@@ -36,4 +35,4 @@ export const PrivateRoutes=[
   },
 ];
 
-export default ROUTES;
+export default {ROUTES,PrivateRoutes};

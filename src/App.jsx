@@ -1,12 +1,12 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { useAuthContext } from "../src/Contexts/AuthContext";
-import {PrivateRoutes} from "./Routes/Routes"
-import ROUTES from "./Routes/Routes"
+import {ROUTES,PrivateRoutes} from "./Routes/Routes"
 import NotFound from "../src/Pages/NotFound";
 
 function App() {
-  const { isLoggedIn, decodedToken } = useAuthContext();
+  const { isLoggedIn, } = useAuthContext();
+  // const userRoles = decodedToken?.roles || [];  //for role based routes
   function renderRoutes() {
     return ROUTES.map((route, index) => (
       <Route

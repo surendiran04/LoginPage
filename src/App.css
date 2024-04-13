@@ -1,6 +1,6 @@
 
 .bg-gradient{
-    background-image: url('./assets/Bg1.png');
+    background-image: url('./assets/Bg1.jpg');
     background-position:center;
     background-repeat: no-repeat;
     object-fit:cover;
@@ -21,7 +21,7 @@
  
 }
 .bg-gradient2{  /*for Forgot Password*/
-    background-image: url('./assets/Bg4.webp');
+    background-image: url('./assets/Bg4.jpg');
     background-position:center;
     background-repeat: no-repeat;
     object-fit:cover;
@@ -30,8 +30,8 @@
     width:100vw;
  
 }
-.bg-gradient1{  /*for Reset password*/
-    background-image: url('./assets/Bg3.jpg');
+.bg-gradient3{  /*for Reset password*/
+    background-image: url('./assets/Bg5.jpg');
     background-position:center;
     background-repeat: no-repeat;
     object-fit:cover;
@@ -43,8 +43,8 @@
 
 /* Glassmorphism card effect */
 .card-gradient{
-    backdrop-filter: blur(10px) saturate(200%);
-    -webkit-backdrop-filter: blur(10px) saturate(200%);
+    backdrop-filter: blur(1px) saturate(200%);
+    -webkit-backdrop-filter: blur(1px) saturate(200%);
     background-color: rgba(17, 25, 40, 0.75);
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.125);

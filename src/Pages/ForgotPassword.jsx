@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 const { VITE_BACKEND_URL } = import.meta.env;
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import "../app.css";
+import "../App.css";
 
 export default function ForgotPassword() {
   let notify = () =>

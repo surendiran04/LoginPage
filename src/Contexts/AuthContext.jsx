@@ -11,12 +11,18 @@ export const useAuthContext = () => useContext(AuthContext);
 
 export default function AuthContextProvider({ children }) {
   const [isLoggedIn, setLoggedIn] = useState(false);
+  const [tk, setTk] = useState({});
   const token = sessionStorage.getItem("_tk");
   const { decodedToken, isExpired } = useJwt(token || "");
 
   useEffect(() => {
-    if (token) {
+    if (decodedToken) {
       setLoggedIn(true);
+      setTk(decodedToken);
+    }
+    if (isExpired) {
+      setLoggedIn(false);
+      setTk({});
     }
   }, [token]);
 
@@ -24,6 +30,7 @@ export default function AuthContextProvider({ children }) {
     isLoggedIn,
     setLoggedIn,
     decodedToken,
+    tk,
   });
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;

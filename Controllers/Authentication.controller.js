@@ -69,6 +69,7 @@ function signInUser(req, res) {
               success: true,
               message: "Sign In successful",
               token: token,
+              user:response.Name,
             });
           } else {
             return res.status(400).json({

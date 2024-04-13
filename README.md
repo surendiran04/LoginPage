@@ -7,6 +7,7 @@
 - Authentication & Authorization are done using jwt token<br/>
 - Dynamic routing <br/>
 - React-Tostify for showing sucsess & Error Messages<br/>
+- Tailwindcss for Styling pages<br/>
 - context Api for state management<br/>
 - react-hood-form for Easy form manipulation and handling errors<br/>
 - Fetch,Try & catch blocks for fetching data from Backend Api's synchronously<br/>

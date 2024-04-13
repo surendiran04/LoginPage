@@ -2,7 +2,6 @@ const express = require("express");
 const body_parser = require("body-parser");
 const cors = require("cors");
 const {initiateDBConnection } = require('./Database/DBconfig')
-// const AuthRouter = require('./Router/routes')
 const dotenv = require('dotenv');
 let PORT= process.env.PORT;
 

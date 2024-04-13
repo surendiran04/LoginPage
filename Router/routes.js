@@ -1,8 +1,8 @@
 const {
     createUser,
     signInUser,
-    forgotPassword
-    // updateUser,
+    forgotPassword,
+    updatePass
   } = require("../Controllers/Authentication.controller");
  
   const AuthRouter = require("express").Router();
@@ -10,8 +10,7 @@ const {
   AuthRouter.post("/signUp", createUser);
   AuthRouter.post("/signin", signInUser);
   AuthRouter.post("/forgotPassword",   forgotPassword);
-  // AuthRouter.post("/sendmail", sendMail);
-  // AuthRouter.patch("/update/:uid", updateUser);
+  AuthRouter.patch("/resetPassword/:id/:token",  updatePass);
   
   module.exports = AuthRouter;
   

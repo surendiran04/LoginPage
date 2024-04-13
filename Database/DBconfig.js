@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 require('dotenv').config();
 
-// function initiateDBConnection() {
+// function initiateDBConnection() { using then catch block
 //   mongoose
 //   .connect(`${process.env.DB_URL}`)
 //     .then((response) => {

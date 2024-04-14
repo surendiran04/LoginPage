@@ -12,6 +12,7 @@ export default function UpdatePassword() {
   let notify = () => toast.warn(errors.password?.message);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [isShow, setIsShow] = useState(false);
 
   const {
     register,
@@ -19,6 +20,10 @@ export default function UpdatePassword() {
     formState: { errors },
     reset,
   } = useForm();
+
+  const toggleState = () => {
+    setIsShow(!isShow);
+  };
 
   const onSubmit = (data) => {
     console.log(data);
@@ -64,7 +69,7 @@ export default function UpdatePassword() {
           <div className="flex">
             <input
               name="password"
-              type="password"
+               type={isShow ? "text" : "password"}
               placeholder="Enter your new Password "
               className="w-full p-3 rounded-full text-xl text-black outline-none border-none px-5 z-0"
               disabled={isLoading}
@@ -73,6 +78,13 @@ export default function UpdatePassword() {
                 minLength: { value: 8, message: "Minimum length should be 8" },
               })}
             />
+             <div onClick={toggleState} classname="cursor-pointer flex-grow ">
+              {isShow ? (
+                <Eye size={32} color={"white"} />
+              ) : (
+                <EyeOff size={32} color={"white"} />
+              )}
+            </div>
           </div>
           <button
             className={`

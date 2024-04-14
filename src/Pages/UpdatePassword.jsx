@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
 const { VITE_BACKEND_URL } = import.meta.env;
 import "../App.css";

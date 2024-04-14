@@ -122,7 +122,7 @@ const forgotPassword = async (req, res) => {
           to: email,
           subject: "Reset Password - Reg",
           html: `<h3>Hello! Here is your New password Link</h3>
-             <a href="http://localhost:5173/resetPassword/${user._id}/${token}">Click here</a>`,
+             <a href="https://surendiran-loginpage.vercel.app/resetPassword/${user._id}/${token}">Click here</a>`,
         };
 
         // Send Email

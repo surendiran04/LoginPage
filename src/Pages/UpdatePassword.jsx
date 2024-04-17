@@ -29,7 +29,7 @@ export default function UpdatePassword() {
 
   const onSubmit = (data) => {
     console.log(data);
-    if(isExpired || decodedToken!=id){
+    if(isExpired || decodedToken.id!=id){
        toast.info('Time expired or mismatching Link');
     }
     else{ 

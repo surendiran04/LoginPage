@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useJwt } from "react-jwt";
 const { VITE_BACKEND_URL } = import.meta.env;
 import "../App.css";
 
@@ -28,7 +29,12 @@ export default function UpdatePassword() {
 
   const onSubmit = (data) => {
     console.log(data);
+    if(isExpired || decodedToken!=id){
+       toast.info('Time expired or mismatching Link');
+    }
+    else{ 
     changePassword(data);
+    }
     reset();
   };
 

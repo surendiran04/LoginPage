@@ -23,7 +23,7 @@ async function createUser(req, res) {
             User.save();
             return res
               .status(201)
-              .send({ success: true, message: "User created sucessfully!Login Now" });
+              .send({ success: true, message: "User created sucessfully!" });
           } else {
             return res.status(500).json({
               success: false,
@@ -122,7 +122,8 @@ const forgotPassword = async (req, res) => {
           to: email,
           subject: "Reset Password - Reg",
           html: `<h3>Hello! Here is your New password Link</h3>
-             <a href="https://surendiran-loginpage.vercel.app/resetPassword/${user._id}/${token}">Click here</a>`,
+                <h5>The Link is valid only for the next 3 minutes</h5>
+              <a href="https://surendiran-loginpage.vercel.app/resetPassword/${user._id}/${token}">Click here</a>`,
         };
 
         // Send Email

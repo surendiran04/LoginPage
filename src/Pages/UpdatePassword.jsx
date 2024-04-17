@@ -9,6 +9,7 @@ import "../App.css";
 
 export default function UpdatePassword() {
   const { id, token } = useParams();
+  const { decodedToken, isExpired } = useJwt(token || "");
   let notify = () => toast.warn(errors.password?.message);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
